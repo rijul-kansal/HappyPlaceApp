@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.happyplaceapp.activity.activity.Adapter.HappyPlaceAdapter
+import com.example.happyplaceapp.activity.activity.Model.HappyPlaceModel
 import com.example.happyplaceapp.activity.activity.database.DatabaseHandler
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +31,15 @@ class MainActivity : AppCompatActivity() {
         var adapter=HappyPlaceAdapter(arrlis)
         binding?.recycleView?.layoutManager= LinearLayoutManager(this)
         binding?.recycleView?.adapter=adapter
+
+        adapter.setOnClickListener(object :
+            HappyPlaceAdapter.OnClickListener {
+            override fun onClick(position: Int, model: HappyPlaceModel) {
+                var intent= Intent(this@MainActivity,HappyPlacesDetailActivity::class.java)
+                intent.putExtra("Extra",model)
+                startActivity(intent)
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

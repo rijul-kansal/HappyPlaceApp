@@ -1,5 +1,6 @@
 package com.example.happyplaceapp.activity.activity.Model
 
+import java.io.Serializable
 
 
 data class HappyPlaceModel(
@@ -11,4 +12,4 @@ data class HappyPlaceModel(
      val location: String,
      val latitude: Double,
      val longitude: Double
-)
+):Serializable
