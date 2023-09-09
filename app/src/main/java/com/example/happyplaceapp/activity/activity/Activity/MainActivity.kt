@@ -37,8 +37,8 @@ class MainActivity : AppCompatActivity() {
         binding?.recycleView?.adapter=adapter
        if(arrlis.size>0)
        {
-//           binding?.recycleView?.visibility= View.VISIBLE
-//           binding?.general?.visibility=View.INVISIBLE
+           binding?.recycleView?.visibility= View.VISIBLE
+           binding?.general?.visibility=View.INVISIBLE
             adapter.setOnClickListener(object :
                 HappyPlaceAdapter.OnClickListener {
                 override fun onClick(position: Int, model: HappyPlaceModel) {
@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val adapter = binding?.recycleView?.adapter as HappyPlaceAdapter
                     adapter.removeAt(this@MainActivity,viewHolder.adapterPosition)
+                    getDataFromDataBase()
                 }
             }
             val itemTouchHelper = ItemTouchHelper(swipeHandler)
@@ -66,8 +67,8 @@ class MainActivity : AppCompatActivity() {
        }
         else
        {
-//           binding?.recycleView?.visibility= View.INVISIBLE
-//           binding?.general?.visibility=View.VISIBLE
+           binding?.recycleView?.visibility= View.INVISIBLE
+           binding?.general?.visibility=View.VISIBLE
        }
     }
 
