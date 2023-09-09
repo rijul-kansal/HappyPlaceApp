@@ -62,7 +62,7 @@ class HappyPlaceActivity : AppCompatActivity() {
         binding?.dateEvmain?.setOnClickListener {
             populateDateWithDatepicket()
         }
-
+//
         binding?.cameraIb?.setOnClickListener {
             askingForPermission(CAMERA)
         }
@@ -73,18 +73,18 @@ class HappyPlaceActivity : AppCompatActivity() {
         binding?.saveBtn?.setOnClickListener {
             saveToDataBase()
         }
-
-        mHappyPlaceActivity=intent.getSerializableExtra("EXTRA") as HappyPlaceModel
-        if(mHappyPlaceActivity!=null)
-        {
-            binding?.titleEvmain?.setText(mHappyPlaceActivity!!.title)
-            binding?.descriptionEvmain?.setText(mHappyPlaceActivity!!.description)
-            binding?.dateEvmain?.setText(mHappyPlaceActivity!!.date)
-            binding?.locationEvmain?.setText(mHappyPlaceActivity!!.location)
-            saveImageToInternalStorage=Uri.parse(mHappyPlaceActivity!!.image)
-            binding?.imageIv?.setImageURI(saveImageToInternalStorage)
-            mLattiiTude=mHappyPlaceActivity!!.latitude
-            mLongiTude=mHappyPlaceActivity!!.longitude
+        if(intent.hasExtra("EXTRA")) {
+            mHappyPlaceActivity = intent.getSerializableExtra("EXTRA") as HappyPlaceModel
+            if (mHappyPlaceActivity != null) {
+                binding?.titleEvmain?.setText(mHappyPlaceActivity!!.title)
+                binding?.descriptionEvmain?.setText(mHappyPlaceActivity!!.description)
+                binding?.dateEvmain?.setText(mHappyPlaceActivity!!.date)
+                binding?.locationEvmain?.setText(mHappyPlaceActivity!!.location)
+                saveImageToInternalStorage = Uri.parse(mHappyPlaceActivity!!.image)
+                binding?.imageIv?.setImageURI(saveImageToInternalStorage)
+                mLattiiTude = mHappyPlaceActivity!!.latitude
+                mLongiTude = mHappyPlaceActivity!!.longitude
+            }
         }
     }
 
