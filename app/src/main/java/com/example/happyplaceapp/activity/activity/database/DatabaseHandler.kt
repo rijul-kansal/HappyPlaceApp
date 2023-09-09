@@ -46,7 +46,6 @@ class DatabaseHandler(context: Context) :
     fun addHappyPlace(happyPlace: HappyPlaceModel): Long {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-//        contentValues.put(KEY_ID, happyPlace.id)
         contentValues.put(KEY_TITLE, happyPlace.title)
         contentValues.put(KEY_IMAGE, happyPlace.image)
         contentValues.put(
@@ -89,5 +88,27 @@ class DatabaseHandler(context: Context) :
             return ArrayList()
         }
         return happyPlaceList
+    }
+    fun deleteRecord(emp: HappyPlaceModel):Int{
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_ID, emp.id) // EmpModelClass UserId
+        val success = db.delete(TABLE_HAPPY_PLACE,"_id="+emp.id,null)
+        db.close()
+        return success
+    }
+    fun updateRecord(happyPlace: HappyPlaceModel):Int{
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_TITLE, happyPlace.title)
+        contentValues.put(KEY_IMAGE, happyPlace.image)
+        contentValues.put(KEY_DESCRIPTION, happyPlace.description)
+        contentValues.put(KEY_DATE, happyPlace.date)
+        contentValues.put(KEY_LOCATION, happyPlace.location)
+        contentValues.put(KEY_LATITUDE, happyPlace.latitude)
+        contentValues.put(KEY_LONGITUDE, happyPlace.longitude)
+        val success = db.update(TABLE_HAPPY_PLACE, contentValues,"_id="+happyPlace.id,null)
+        db.close()
+        return success
     }
 }

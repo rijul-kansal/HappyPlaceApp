@@ -37,6 +37,8 @@ class HappyPlaceActivity : AppCompatActivity() {
     var saveImageToInternalStorage:Uri?=null
     var mLattiiTude:Double=0.0
     var mLongiTude:Double=0.0
+
+    var mHappyPlaceActivity:HappyPlaceModel?=null
     companion object{
         private var CAMERA=1
         private var GALLERY=2
@@ -71,6 +73,19 @@ class HappyPlaceActivity : AppCompatActivity() {
         binding?.saveBtn?.setOnClickListener {
             saveToDataBase()
         }
+
+        mHappyPlaceActivity=intent.getSerializableExtra("EXTRA") as HappyPlaceModel
+        if(mHappyPlaceActivity!=null)
+        {
+            binding?.titleEvmain?.setText(mHappyPlaceActivity!!.title)
+            binding?.descriptionEvmain?.setText(mHappyPlaceActivity!!.description)
+            binding?.dateEvmain?.setText(mHappyPlaceActivity!!.date)
+            binding?.locationEvmain?.setText(mHappyPlaceActivity!!.location)
+            saveImageToInternalStorage=Uri.parse(mHappyPlaceActivity!!.image)
+            binding?.imageIv?.setImageURI(saveImageToInternalStorage)
+            mLattiiTude=mHappyPlaceActivity!!.latitude
+            mLongiTude=mHappyPlaceActivity!!.longitude
+        }
     }
 
     private fun saveToDataBase() {
@@ -80,7 +95,7 @@ class HappyPlaceActivity : AppCompatActivity() {
         var loca=binding?.locationEvmain!!.text.toString()
         if(tit.isNotEmpty() && des.isNotEmpty() && date.isNotEmpty() && loca.isNotEmpty()) {
             var hpm = HappyPlaceModel(
-                0,
+                if(mHappyPlaceActivity==null) 0 else mHappyPlaceActivity!!.id,
                 tit,
                 saveImageToInternalStorage!!.toString(),
                 des,
@@ -90,11 +105,20 @@ class HappyPlaceActivity : AppCompatActivity() {
                 mLongiTude
             )
             var dbhandler = DatabaseHandler(this)
-            var res = dbhandler.addHappyPlace(hpm)
-            if (res > 0) {
-                setResult(Activity.RESULT_OK)
-                Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
-                finish()
+            if(mHappyPlaceActivity==null) {
+                var res = dbhandler.addHappyPlace(hpm)
+                if (res > 0) {
+                    setResult(Activity.RESULT_OK)
+                    Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
+                    finish()
+                }
+            }else {
+                var res = dbhandler.updateRecord(hpm)
+                if (res > 0) {
+                    setResult(Activity.RESULT_OK)
+                    Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
+                    finish()
+                }
             }
         }
     }
